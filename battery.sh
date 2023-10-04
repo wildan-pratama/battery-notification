@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+low="21"
 
 # Check if 'acpi' or 'upower' command is available
 getinfo () {
@@ -53,12 +54,12 @@ if [ "$1" = "1" ]; then
             if [ -f "$DIR/.charging" ]; then
                 rm -rf $DIR/.charging
                 notify-send -i "$HOME/.local/share/dunst/charging.png" -u normal "Battery" "Charging Disconnected" -t 2000 --replace-id=555 -r 1 
-            elif [ "$battery_percent" -lt "21" ]; then
+            elif [ "$battery_percent" -lt "$low" ]; then
                 if [ ! -f "$DIR/.low" ]; then
                     touch $DIR/.low
                     notify-send -i "$HOME/.local/share/dunst/battery-warning.png" -u critical "Battery" "battery low ($battery_percent)" -t 2000 --replace-id=555 -r 1 
                 fi
-            elif [ "$battery_percent" -ge "21" ]; then
+            elif [ "$battery_percent" -ge "$low" ]; then
                 if [ -f "$DIR/.low" ]; then
                     rm -rf $DIR/.low
                 fi
@@ -73,10 +74,13 @@ if [ "$1" = "1" ]; then
     done
 elif [ "$1" = "2" ]; then
     while true; do
+        plug="no"
         getinfo
         if [ "$charging" = "no" ]; then
-            if [ "$battery_percent" -lt "21" ]; then
-                notify-send -i "$HOME/.local/share/dunst/battery-warning.png" -u critical "Battery" "battery low ($battery_percent)" -t 2000 --replace-id=555 -r 1 
+            if [ "$plug" = "no" ]; then
+                if [ "$battery_percent" -lt "$low" ]; then
+                    notify-send -i "$HOME/.local/share/dunst/battery-warning.png" -u critical "Battery" "battery low ($battery_percent)" -t 2000 --replace-id=555 -r 1 
+                fi
             fi
 	    fi
         sleep 600
