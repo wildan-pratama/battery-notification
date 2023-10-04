@@ -34,10 +34,7 @@ getinfo () {
 if [ "$1" = "1" ]; then
     while true; do
         plug="no"
-        #getinfo
-        charging="no"
-        plug="no"
-        battery_percent="14"
+        getinfo
         if [ "$charging" = "yes" ]; then
             if [ ! -f "$DIR/.charging" ]; then
                 touch $DIR/.charging
