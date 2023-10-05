@@ -46,7 +46,7 @@ if [ "$1" = "1" ]; then
 	    elif [ "$plug" = "yes" ]; then
             if [ ! -f "$DIR/.plug" ]; then
                 touch $DIR/.plug
-                notify-send -i "$HOME/.local/share/dunst/power-plugin.png" -u normal "Battery" "Plugin not charging.." -t 2000 --replace-id=555 -r 1 
+                notify-send -i "$HOME/.local/share/dunst/power-plugin.png" -u normal "Power" "Plugin not charging.." -t 2000 --replace-id=555 -r 1 
             elif [ -f "$DIR/.low" ]; then
                 rm -rf $DIR/.low
             fi
@@ -67,7 +67,7 @@ if [ "$1" = "1" ]; then
         elif [ "$plug" = "no" ]; then
             if [ -f "$DIR/.plug" ]; then
                 rm -rf $DIR/.plug
-                notify-send -i "$HOME/.local/share/dunst/power-plugin.png" -u normal "Battery" "Plugin Disconnected" -t 2000 --replace-id=555 -r 1 
+                notify-send -i "$HOME/.local/share/dunst/power-plugin.png" -u normal "Power" "Plugin Disconnected" -t 2000 --replace-id=555 -r 1 
             fi
         fi
         sleep 1
